@@ -1,0 +1,378 @@
+{
+  "name": "Workflow 3: AI Lead Qualification & Sales Pipeline System (Clean Version)",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y",
+          "mode": "list",
+          "cachedResultName": "Workflow 3: AI Lead Qualification & Sales Pipeline System (Clean Version) (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1837333226,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y/edit#gid=1837333226"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -144
+      ],
+      "id": "f35fc82f-8ad4-4008-a846-be0c607bb93c",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "oWLZtsTXLWr3PNY2",
+          "name": "Google Sheets Trigger OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Analyze this lead.\n\nName: {{$json[\"Full Name\"]}}\nCompany: {{$json[\"Company Name\"]}}\nIndustry: {{$json[\"Industry\"]}}\nService Needed: {{$json[\"Service Needed\"]}}\nBudget: {{$json[\"Estimated Budget\"]}}\nTimeline: {{$json[\"Timeline\"]}}\nProject Details: {{$json[\"Project Details\"]}}\n\nReturn ONLY valid JSON:\n\n{\n  \"summary\": \"\",\n  \"score\": 0,\n  \"temperature\": \"\"\n}\n\nScoring:\n80-100 = Hot\n50-79 = Warm\n0-49 = Cold\n\nReturn ONLY raw JSON.\n\nDo not use markdown.\nDo not wrap the response in ```json.\nDo not add any explanation."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        -336,
+        -80
+      ],
+      "id": "d247caa3-f571-4941-86ca-1d4e9b2bae95",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "qkmcSIWhxRW61AM1",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const text = $json.output[0].content[0].text;\n\nconst cleanText = text\n  .replace(/```json/g, '')\n  .replace(/```/g, '')\n  .trim();\n\nconst data = JSON.parse(cleanText);\n\nreturn {\n  json: {\n    ...$('Google Sheets Trigger').first().json,\n\n    \"AI Summary\": data.summary,\n    \"Lead Score\": data.score,\n    \"Lead Temperature\": data.temperature\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "383d454d-fc4f-441d-9a48-9e340c6ebc26",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y",
+          "mode": "list",
+          "cachedResultName": "Workflow 3: AI Lead Qualification & Sales Pipeline System (Clean Version) (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1837333226,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MiNqpcaqHM2tk882vqc9MgIq7ilzHfwtIPa9kcntl6Y/edit#gid=1837333226"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "AI Summary": "={{ $json['AI Summary'] }}",
+            "Lead Score": "={{ $json['Lead Score'] }}",
+            "Lead Temperature": "={{ $json['Lead Temperature'] }}",
+            "Email": "={{ $json.Email }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Service Needed",
+              "displayName": "Service Needed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estimated Budget",
+              "displayName": "Estimated Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timeline",
+              "displayName": "Timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Project Details",
+              "displayName": "Project Details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AI Summary",
+              "displayName": "AI Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lead Score",
+              "displayName": "Lead Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lead Temperature",
+              "displayName": "Lead Temperature",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        16
+      ],
+      "id": "f69e49d5-9262-4a8e-bb4a-f51f1865949d",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Vvyaf4MtdtLlFXW1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a0b532b7-49dd-4190-b167-b587a7fb7509",
+              "leftValue": "={{$json[\"Lead Temperature\"]}}",
+              "rightValue": "Hot",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        64
+      ],
+      "id": "40661c6e-90e5-4d61-8ec6-3f468ab2d958",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "1200648760",
+        "text": "=🔥 HOT LEAD ALERT\n\n📧 Email: {{$json[\"Email\"]}}\n\n🔥 Lead Score: {{$json[\"Lead Score\"]}}\n\n🌡️ Temperature: {{$json[\"Lead Temperature\"]}}\n\n📋 Summary:\n\n{{$json[\"AI Summary\"]}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -32
+      ],
+      "id": "6a869a20-471b-4adb-9463-feff07c5df82",
+      "name": "Send a text message",
+      "webhookId": "2acadd33-f6d7-432d-afe6-78cc7141dcf6",
+      "credentials": {
+        "telegramApi": {
+          "id": "qV5fSLbX8Zjt733B",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2849588c-e1e1-49bd-9155-315f97157715",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f2f23a593b5262fad10e7ebf366e5500ddfd99f99fc69ff6bdb831511c19c666"
+  },
+  "id": "NO5TJ0ekfdtF1fNE",
+  "tags": []
+}
