@@ -396,7 +396,7 @@ Reduce manual lead handling.
 
 # Screenshots
 
-screenshots/AI Lead Qualification & Sales Pipeline System.png
+workflow-overview.png
 
 # Testing & Validation
 
