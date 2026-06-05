@@ -1,1 +1,108 @@
 
+# Episode 03
+
+## Cold Lead Database & Sales Pipeline Completion
+
+### Objective
+
+Store low-priority leads for future nurturing instead of losing them.
+
+---
+
+## What Was Built
+
+IF Warm?
+
+↓
+
+False
+
+↓
+
+Cold Leads Sheet
+
+---
+
+## Features
+
+* Cold lead storage
+* Lead archive system
+* Future re-engagement database
+* Complete sales pipeline
+
+---
+
+## Cold Lead Logic
+
+Condition:
+
+Lead Temperature = Cold
+
+Action:
+
+Save lead information to the Cold Leads sheet.
+
+Purpose:
+
+Preserve potential future opportunities.
+
+---
+
+## Skills Learned
+
+* Multi-branch Workflows
+* Data Archiving
+* Lead Lifecycle Management
+* Sales Pipeline Design
+
+---
+
+## Business Value
+
+No Lead Should Be Lost.
+
+Every lead is stored and managed according to its priority level.
+
+---
+
+## Final Workflow Architecture
+
+Google Form
+
+↓
+
+Google Sheets Trigger
+
+↓
+
+OpenAI GPT-4o Mini
+
+↓
+
+Code Node
+
+↓
+
+Google Sheets Update
+
+↓
+
+IF Hot?
+
+├── Hot → Telegram Alert
+
+└── Not Hot
+
+↓
+
+IF Warm?
+
+├── Warm → Gmail Follow-Up
+
+└── Cold → Cold Leads Sheet
+
+---
+
+## Project Status
+
+Workflow 01 Completed Successfully
