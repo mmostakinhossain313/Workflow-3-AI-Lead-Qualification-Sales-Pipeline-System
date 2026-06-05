@@ -396,7 +396,7 @@ Reduce manual lead handling.
 
 # Screenshots
 
-workflow-overview.png
+![Workflow Overview](screenshots/workflow-overview.png)
 
 # Testing & Validation
 
