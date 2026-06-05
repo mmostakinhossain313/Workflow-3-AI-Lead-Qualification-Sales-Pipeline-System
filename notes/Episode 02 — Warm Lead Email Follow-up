@@ -1,1 +1,86 @@
+# Episode 02
+
+## Automated Lead Routing & Warm Lead Follow-Up
+
+### Objective
+
+Automatically route qualified leads to the correct communication channel.
+
+---
+
+## What Was Built
+
+AI Analysis
+
+↓
+
+IF Node
+
+↓
+
+Hot Lead
+
+↓
+
+Telegram Alert
+
+OR
+
+↓
+
+Warm Lead
+
+↓
+
+Email Follow-Up
+
+---
+
+## Features
+
+### Hot Lead Route
+
+Condition:
+
+Lead Temperature = Hot
+
+Action:
+
+Send Telegram notification.
+
+Purpose:
+
+Immediate sales attention.
+
+---
+
+### Warm Lead Route
+
+Condition:
+
+Lead Temperature = Warm
+
+Action:
+
+Send automated email.
+
+Purpose:
+
+Maintain communication and encourage conversion.
+
+---
+
+## Skills Learned
+
+* IF Node Logic
+* Conditional Routing
+* Telegram Integration
+* Gmail Integration
+* Automated Follow-Up Systems
+
+---
+
+## Business Value
+
+The system automatically prioritizes leads and ensures timely communication.
 
