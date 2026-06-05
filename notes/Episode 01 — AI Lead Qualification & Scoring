@@ -1,1 +1,74 @@
+# Episode 01
+
+## AI Lead Qualification & Scoring System
+
+### Objective
+
+Build an AI-powered lead qualification system that analyzes incoming leads and assigns a score based on business value and buying intent.
+
+---
+
+## What Was Built
+
+Google Form
+
+↓
+
+Google Sheets Trigger
+
+↓
+
+OpenAI GPT-4o Mini
+
+↓
+
+Lead Analysis
+
+---
+
+## Features
+
+* Lead data collection
+* AI-generated summary
+* Lead score generation
+* Lead temperature classification
+* Google Sheets integration
+
+---
+
+## AI Output
+
+The AI generates:
+
+* Summary
+* Lead Score
+* Lead Temperature
+
+Example:
+
+Summary:
+Client is looking for an AI automation solution and requires implementation as soon as possible.
+
+Lead Score:
+85
+
+Lead Temperature:
+Hot
+
+---
+
+## Skills Learned
+
+* Google Forms Integration
+* Google Sheets Trigger
+* OpenAI Integration
+* Prompt Engineering
+* AI Lead Analysis
+* Data Processing
+
+---
+
+## Business Value
+
+Sales teams can instantly identify high-value opportunities without manually reviewing every lead.
 
